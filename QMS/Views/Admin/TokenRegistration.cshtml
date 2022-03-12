@@ -1,0 +1,281 @@
+﻿@using Domain
+@model Registration
+@{
+    /**/
+
+    ViewBag.Title = "Token Registration";
+    //Layout = "~/Views/Shared/_Otherlayout.cshtml";
+    List<SelectListItem> GenderList = new List<SelectListItem>();
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Male",
+        Value = "M"
+    });
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Female",
+        Value = "F"
+    });
+
+    List<SelectListItem> PaymentList = new List<SelectListItem>();
+    PaymentList.Add(new SelectListItem
+    {
+        Text = "CASH",
+        Value = "C"
+    });
+    PaymentList.Add(new SelectListItem
+    {
+        Text = "Online",
+        Value = "O"
+    });
+    List<SelectListItem> DepartmentList = new List<SelectListItem>();
+    DepartmentList.Add(new SelectListItem
+    {
+        Text = "Department Name",
+        Value = ""
+    });
+}
+
+<div class="padding">
+    <div class="row">
+
+        <div class="col-sm-12 col-md-12">
+
+            <div class="login">
+
+                <div class="form-group">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="loginbox radius">
+                            <div class="loginboxinner radius" align="center">
+
+                                <div class="loginform" align="center">
+                                    <div class="form-group">
+                                        <input class="form-control" id="Name" placeholder="Enter Name" maxlength="100" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="SUserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="Age" maxlength="10" placeholder="Enter Age" type="text" onkeypress="return IsNumeric(event);">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="CounterNumber" placeholder="Counter Number" maxlength="100" type="text">
+                                    </div>
+                                    @Html.DropDownList("dept", new SelectList(ViewData["DepartmentList"] as List< DepartmentMaster> , "ID", "DeparmentName"), new { @class = "form-control" })
+                                    
+                                </div>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Gender", new SelectList(GenderList, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.DropDownList("Payment", new SelectList(PaymentList, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" id="DOB" maxlength="10" placeholder="DD/MM/YYYY" type="text" onblur="return; getAge()">
+                                        <label id="lblAge"></label>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <button type="submit" onclick="Tokensubmit()" class="btn btn-success">Submit </button>
+                                        <input type="button" value="Refresh" class="btn btn-success" onclick="GetClear()" />
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+        </div>
+    </div>
+</div>
+
+<style>
+    .field-icon {
+        float: right;
+        margin-left: -25px;
+        margin-top: -25px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .container {
+        padding-top: 5px;
+        margin: auto;
+    }
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script>
+    function getAge(dateString) {
+        var today = new Date();
+        var dob = document.getElementById(DOB).value;
+        var birthDate = new Date(dob);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        document.getElementById('lblAge').innerHTML = age;
+       // return age;
+    }
+    function mouseoverPass(id,ClassName) {
+        var obj = document.getElementById(id);
+        $(ClassName).removeClass("fa fa-fw fa-eye field-icon");
+        $(ClassName).removeClass("fa-eye fa-eye-slash");
+        $(ClassName).addClass("fa fa-fw fa-eye field-icon");
+        obj.type = "text";
+    }
+
+    function mouseoutPass(id, ClassName) {
+        var obj = document.getElementById(id);
+        $(ClassName).removeClass("fa fa-fw fa-eye field-icon");
+        $(ClassName).removeClass("fa-eye fa-eye-slash");
+        $(ClassName).addClass("fa fa-fw fa-eye field-icon fa-eye fa-eye-slash");
+        obj.type = "password";
+    }
+    function fValidation(varfield, varAlert) {
+
+        alert(varAlert);
+        var varX = document.getElementById(varfield).offsetTop;
+        var varY = document.getElementById(varfield).offsetLeft;
+        window.scrollTo(varX, varY);
+        document.getElementById(varfield).focus();
+    }
+    $(document).ready(function ($) {
+
+        $('#FDOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+        $('#DOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+
+    });
+    function GetClear() {
+        document.getElementById('SUserMobile').value = "";
+        document.getElementById('Name').value = "";
+        document.getElementById('DOB').value = "";
+        document.getElementById('Age').value = "";
+        document.getElementById('CounterNumber').value = "";
+        document.getElementById('dept').value = "";
+
+    }
+       function Tokensubmit() {
+        if (stripBlanks(document.getElementById('SUserMobile').value) == "" || document.getElementById('SUserMobile').value.length != 10) {
+            fValidation('SUserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('SUserMobile').focus();
+            return false;
+        }
+
+        if (stripBlanks(document.getElementById('Name').value) == "") {
+            fValidation('Name', 'Please  Enter Name');
+            document.getElementById('Name').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('DOB').value) == "" || !validateDate(document.getElementById('DOB').value)) {
+            fValidation('DOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('DOB').focus();
+            return false;
+           }
+
+
+
+
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("TokenRegistrationSave", "Admin")',
+            data: {
+                Name: $('#Name').val(), Mobile: $('#SUserMobile').val(), Age: $('#Age').val(), CounterNumberID: $('#CounterNumber').val(), DepartmentID: $('#dept').val(),
+                Gender: $('#Gender').val(), TokenNumber: $('#TokenNumber').val(), Payment: $('#Payment').val()
+
+            },
+            success: function (response) {
+                debugger;
+                alert(" Successfully Updated Your Token No is " + response.split('^')[1]);
+                GetClear();
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    function ForgetPassword() {
+        if (stripBlanks(document.getElementById('FUserMobile').value) == "" || document.getElementById('FUserMobile').value.length != 10) {
+            fValidation('FUserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('FUserMobile').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('FDOB').value) == "" || !validateDate(document.getElementById('FDOB').value)) {
+            fValidation('FDOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('FDOB').focus();
+            return false;
+        }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("ForgetPassword", "Registration")',
+            data: { UserMobile: $('#FUserMobile').val(), DOB: $('#FDOB').val() },
+
+            success: function (response) {
+                alert(response);
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    function userlogin() {
+        if (stripBlanks(document.getElementById('UserMobile').value) == "" || document.getElementById('UserMobile').value.length != 10) {
+            fValidation('UserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('UserMobile').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('UserPass').value) == "") {
+            fValidation('UserPass', 'Please  Enter password');
+            document.getElementById('UserPass').focus();
+            return false;
+        }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Login", "Registration")',
+            data: { UserMobile: $('#UserMobile').val(), UserPass: $('#UserPass').val() },
+
+            success: function (response) {
+                debugger;
+                if (response.split('^')[0] == "Success") {
+                    window.location.href = response.split('^')[1];
+                }
+                else {
+                    alert(response);
+                }
+
+
+            },
+            error: function (response) {
+
+            }
+        });
+
+    }
+
+    function IsNumeric(key) {
+        var keycode = (key.which) ? key.which : key.keyCode;
+        if (keycode > 31 && (keycode < 48 || keycode > 57)) {
+            //alert(" You can enter only Digit 0 to 9 ");
+            return false;
+        }
+        else return true;
+    }
+
+</script>
+
+
+

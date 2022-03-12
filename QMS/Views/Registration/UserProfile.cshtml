@@ -1,0 +1,158 @@
+﻿@using Domain
+@model Registration
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    List<SelectListItem> GenderList = new List<SelectListItem>();
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Male",
+        Value = "M"
+    });
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Female",
+        Value = "F"
+    });
+}
+  
+
+<div class="row" style="margin-top:10px;">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="row about-head-wthree">
+            <div class="col-lg-12 left-abw3ls">
+
+                <h4 class="font-italic border-bottom text-center font-weight-bold pb-3 mb-4">Profile</h4>
+
+                <div class="form-group text-center">
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="loginbox radius">
+                                <div class="loginboxinner radius" align="center">
+                                   
+                                    <div class="loginform" align="center">
+                                   
+                                        <div class="form-group">
+                                            <div class="row text-left">
+                                                <div class="col-md-3">Mobile No</div>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" id="MobileNo" maxlength="10" placeholder="Enter Mobile Number" value="@Model.UserMobile" type="text" disabled="disabled" onkeypress="return IsNumeric(event);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row text-left">
+                                                <label class="col-md-3">Name</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" id="Name" maxlength="80" placeholder="Enter Name" type="text" value="@Model.Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row text-left">
+                                                <label class="col-md-3">Gender</label>
+                                                <div class="col-md-9">
+                                                    @Html.DropDownList("Gender", new SelectList(GenderList, "Value", "Text"), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row text-left">
+                                                <label class="col-md-3">Date of Birth</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" id="DOB" maxlength="10" type="text" value="@Model.DOB">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row text-left">
+                                                <label class="col-md-3">E-Mailid</label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" id="Email" maxlength="50" placeholder="Enter Email Id" value="@Model.Email" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                         
+
+                                        <div class="form-group">
+                                            <button type="submit" onclick="UpdateProfile()" class="btn btn-success">Update</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script>
+    $(document).ready(function ($) {
+
+        $('#DOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+        $('#Gender').val('@Model.Gender.Trim()');
+    });
+    function IsNumeric(key) {
+        var keycode = (key.which) ? key.which : key.keyCode;
+        if (keycode > 31 && (keycode < 48 || keycode > 57)) {
+            //alert(" You can enter only Digit 0 to 9 ");
+            return false;
+        }
+        else return true;
+    }
+    function UpdateProfile() {
+        
+      
+
+        if (stripBlanks(document.getElementById('Name').value) == "") {
+            fValidation('Name', 'Please  Enter Name');
+            document.getElementById('Name').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('DOB').value) == "" || !validateDate(document.getElementById('DOB').value)) {
+            fValidation('DOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('DOB').focus();
+            return false;
+        }
+
+        if (stripBlanks(document.getElementById('Email').value) != "" && !validateEmail(document.getElementById('Email').value)) {
+            fValidation('Name', 'Please  Enter valid Email');
+            document.getElementById('Email').focus();
+            return false;
+        }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("UpdateProfile", "Registration")',
+            data: {
+                Name: $('#Name').val(), Gender: $('#Gender').val(), DOB: $('#DOB').val(), Email: $('#Email').val()
+                 
+            },
+            success: function (response) {
+                debugger;
+                if (response == "Login") {
+                    alert("Not Updated! Please login again and try again");
+                    window.location.href = "/Login";
+                }
+                else {
+                    alert(response);
+                }
+
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+</script>
+

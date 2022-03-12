@@ -1,0 +1,356 @@
+﻿@model Domain.Registration
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "StudentRegistration";
+    List<SelectListItem> TitleList = new List<SelectListItem>();
+    TitleList.Add(new SelectListItem
+    {
+        Text = "Mr.",
+        Value = "Mr."
+    });
+    TitleList.Add(new SelectListItem
+    {
+        Text = "Miss.",
+        Value = "Miss."
+    });
+    TitleList.Add(new SelectListItem
+    {
+        Text = "Mrs.",
+        Value = "Mrs."
+    });
+
+    TitleList.Add(new SelectListItem
+    {
+        Text = "Ms.",
+        Value = "Ms."
+    });
+
+    List<SelectListItem> GenderList = new List<SelectListItem>();
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Male",
+        Value = "Male"
+    });
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Female",
+        Value = "Female"
+    });
+
+
+    List<SelectListItem> CareOfList = new List<SelectListItem>();
+    CareOfList.Add(new SelectListItem
+    {
+        Text = "S/O",
+        Value = "S/O"
+    });
+    CareOfList.Add(new SelectListItem
+    {
+        Text = "D/O",
+        Value = "D/O"
+    });
+    CareOfList.Add(new SelectListItem
+    {
+        Text = "C/O",
+        Value = "C/O"
+    });
+    CareOfList.Add(new SelectListItem
+    {
+        Text = "W/O",
+        Value = "W/O"
+    });
+
+}
+
+<style>
+    .Reg-sider {
+        /*background: url(../images/Reg-left-sider.png) no-repeat left top;*/
+        height: auto;
+        border: 1px solid #7BAD14;
+        border-radius: 4px;
+    }
+
+    .timeline {
+        position: relative;
+        margin: 0 0 30px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .inputfilehide {
+        position: absolute;
+        height: .1px !important;
+        display: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+</style>
+<script src="~/js/AdminRegistration.js"></script>
+<script src="~/js/jquery-2.2.3.min.js"></script>
+
+@*<script src="~/js/bootstrap.js"></script>*@
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script>
+
+
+    $(document).ready(function ($) {
+
+        $('#stDob').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+        $("#stfromDate").mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+        $("#stTodate").mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+
+        document.getElementById('ImgStudent').src = "../images/noImage.png";
+        fcancel();
+
+    });
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    //var isfireFox = typeof InstallTrigger !== 'undefined';
+    function fValidation(varfield, varAlert) {
+
+        alert(varAlert);
+        var varX = document.getElementById(varfield).offsetTop;
+        var varY = document.getElementById(varfield).offsetLeft;
+        window.scrollTo(varX, varY);
+        document.getElementById(varfield).focus();
+    }
+    function fpost() {
+        if (stripBlanks(document.getElementById('stname').value) == "") {
+            fValidation('stname', 'Please Enter Student Name');
+            return false;
+        }
+        if (stripBlanks(document.getElementById('stDob').value) == "" || !validateDate(document.getElementById('stDob').value)) {
+            fValidation('stDob', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('stDob').focus();
+            return false;
+        }
+
+        if (stripBlanks(document.getElementById('stfname').value) == "") {
+            fValidation('stfname', 'Please Enter Father Name');
+            return false;
+        }
+        if (stripBlanks(document.getElementById('mobile').value) == "" || document.getElementById('mobile').value < 10) {
+            fValidation('mobile', 'Please Enter 10 Digit mobile No');
+            return false;
+        }
+
+        if (stripBlanks(document.getElementById('email').value) != "" && !validateEmail(document.getElementById('email').value)) {
+            fValidation('email', 'Please Enter valid Emaild');
+            return false;
+        }
+        if (stripBlanks(document.getElementById('address').value) == "") {
+            fValidation('address', 'Please Enter Address');
+            return false;
+        }
+        if (stripBlanks(document.getElementById('stfromDate').value) == "" || !validateDate(document.getElementById('stfromDate').value)) {
+            fValidation('stfromDate', 'Please  Enter From Date in [DD/MM/YYYY] Format');
+            return false;
+        }
+        if (stripBlanks(document.getElementById('stTodate').value) == "" || !validateDate(document.getElementById('stTodate').value)) {
+            fValidation('stTodate', 'Please  Enter To Date in [DD/MM/YYYY] Format');
+            document.getElementById('stTodate').focus();
+            return false;
+        }
+        SaveOnlineRegistration();
+
+    }
+
+</script>
+
+
+<div class="row">
+
+
+    @Html.HiddenFor(model => model.UserId2)
+    <div class="row Reg-sider" style="margin-top:15px;background-color:white;">
+
+        <div class="col-md-12 col-sm-12 text-center" style="margin-top:10px;">
+
+            <h2>Student Registration</h2>
+
+            <hr>
+        </div>
+        <div class="col-md-10" id="SRReg">
+            <div class="col-lg-6 b-r">
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <input type="hidden" id="hidStudID" value="0" />
+                            <div class="col-md-12">
+                                <label><b>Application No</b></label>
+                                <input type="text" id="ApplicationNo" onkeydown="fGetRegistration(event)" tabindex="0" maxlength="10" onkeypress="return Rest_Pincode(event)" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-3">
+                                <label for="name"><b>Title</b></label>
+
+                                @Html.DropDownListFor(model => model.Title, TitleList, new { @class = "form-control", @tabindex = "1", @required = "required" })
+                            </div>
+                            <div class="col-md-9">
+                                <label for="name"><b>Name</b></label>
+                                @Html.TextBoxFor(model => model.stname, new { @class = "form-control", @tabindex = "2", @maxlength = 50, @placeholder = "Enter Student name", required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                <label for="father name"><b>Date of Birth</b></label>
+                                <input type="text" id="stDob" tabindex="3" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+
+                                @Html.LabelFor(model => model.GenderID)
+                                @Html.DropDownListFor(model => model.GenderID, GenderList, new { @class = "form-control", @tabindex = "4", @placeholder = "Enter Student name", required = "required" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="father name"><b>Father Name</b></label>
+                                @Html.TextBoxFor(model => model.stfname, new { @class = "form-control", @tabindex = "5", @maxlength = 100, @placeholder = "Enter Father Name", required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-md-12">
+                                <label for="name"><b>Relation</b></label>
+                                @Html.DropDownListFor(model => model.CareOfTitle, CareOfList, new { @class = "form-control", @tabindex = "6", required = "required" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="email"><b>Contact No</b></label>
+
+                                @Html.TextBoxFor(model => model.mobile, new { @class = "form-control", @maxlength = 10, @tabindex = "7", @placeholder = "Enter contact No.", @onkeypress = "return Rest_Pincode(event);", required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="father name"><b>Email</b></label>
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control", @maxlength = 60, @tabindex = "8", @placeholder = "Enter Email address", required = "required" })
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="email"><b>Address</b></label>
+                                @Html.TextAreaFor(model => model.address, new { @class = "form-control", @maxlength = 250, @tabindex = "9", @placeholder = "Enter Student Address", @onkeypress = "return Rest_Address(event);", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 b-r">
+                <div class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-12 text-center">
+                                <input type="file" id="fuStudent" class="filesearch inputfilehide  fileupload-new" onchange="return ShowingImageStudent(this, '#ImgStudent','lnkRemove');">
+                                <img src="../images/noImage.png" id="ImgStudent" alt="" style="height:100px; width:100px;cursor:pointer;border: 3px solid #e6e5e5;" class="img-circle" onerror="return fRemove();" onclick="ImgUpload('fuStudent');">
+
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="email"><b>Course</b></label>
+                                @Html.DropDownList("CourseId", (SelectList)ViewBag.CourserList, new { @class = "form-control", @tabindex = "10" })
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="email"><b>From Date</b></label>
+                                <input type="text" id="stfromDate" class="form-control" tabindex="11" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="email"><b>To Date</b></label>
+                                <input type="text" id="stTodate" class="form-control" tabindex="12" />
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="col-md-12">
+                <button type="button" id="btnNew" class="btn btn-danger" style="width:100px" ; tabindex="13" onclick="return fGetNewRegistration()">New</button>
+            </div>
+            <div class="col-md-12">
+                <button type="button" id="btnEdit" style="width:100px" ; onclick="return fEdit()" tabindex="14" class="btn btn-danger">Edit</button>
+            </div>
+            <div class="col-md-12">
+                <button type="button" id="btnSave" style="width:100px" ; onclick="return fpost()" tabindex="15" class="btn btn-danger">Save</button>
+            </div>
+            <div class="col-md-12">
+                <button type="button" id="btnCancel" style="width:100px" ; class="btn btn-danger" tabindex="16" onclick="return fcancel()">Cancel</button>
+            </div>
+
+            @*<input type="button" id="btnSave" value="Submit" class="btn btn-primary btn-size-md" style="width:95px" tabindex="0" onclick="return fPostData();">*@
+        </div>
+    </div>
+
+</div>
+
+
+<!--  jQuery -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<style>
+    .html, body {
+        background-color: #758898 !important;
+    }
+
+    input, select, textarea {
+        max-width: 100%;
+    }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+    /* Set a style for all buttons */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+        button:hover {
+            opacity: 1;
+        }
+
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+</style>

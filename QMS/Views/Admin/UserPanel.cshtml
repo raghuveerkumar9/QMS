@@ -1,0 +1,274 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#"> Dashboard </a>
+        </li>
+        @*<li class="breadcrumb-item" aria-current="page"> </li>*@
+    </ol>
+</nav>
+<style>
+    .card-header {
+        background: #394351;
+        color: white;
+        font-weight: 600;
+    }
+
+    .card-title {
+        color: green;
+    }
+</style>
+
+<div class="container my-4">
+    <hr>
+    <!--Grid row-->
+    <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-12 col-xs-12">
+
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                Token Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#TokenModal" class="btn btn-primary">New Token</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                New Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#LoginModal" class="btn btn-primary">New Registration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                New Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#LoginModal" class="btn btn-primary">New Registration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                New Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#LoginModal" class="btn btn-primary">New Registration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                New Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#LoginModal" class="btn btn-primary">New Registration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-xs-6 Qpaper">
+                    <div class="form-group">
+                        <div class="card">
+                            <div class="card-header">
+                                New Registration
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span style="color:green;font-size:20px;font-weight:bold;text-align:center">
+                                        Token
+                                    </span>
+                                </h5>
+                                <hr />
+                                <div class="col-md-12 col-xs-12 text-center">
+                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#LoginModal" class="btn btn-primary">New Registration</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="PremiumID" value="0" />
+<!--Open Popup-->
+<div class="agileits-modal modal fade in login-page" id="PremiumModal" tabindex="-1" role="dialog" aria-labelledby="product-pop" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 style="text-align: center; font-size: 20px; font-weight: bold; color: #333333;">Purchase By Redeem Point </h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h6 style="text-align: left; color: grey;"> Your Wallet Balance:</h6>
+                </div>
+                <div class="form-group">
+                    <h6 style="text-align: left; color: red;"> Redeem Point: <span id="RedeemPoint"></span></h6>
+                </div>
+                <div class="form-group">
+                    <p class="text-justify"><span id="CheckId"></span></p>
+                </div>
+                <div class="form-group text-center">
+                    <button id="PRedeemPoints" type="submit" onclick="RedeemNow()" class="btn btn-success">Buy Now</button>
+                </div>
+
+            </div>
+            <
+        </div>
+    </div>
+</div>
+
+<div class="agileits-modal modal fade in login-page" id="TokenModal" tabindex="-1" role="dialog" aria-labelledby="product-pop" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 style="text-align: center; font-size: 20px; font-weight: bold; color: #333333;">Token Registration</h2>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("TokenRegistration")
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .modal-dialog {
+        right: auto;
+        /*left: 50%;*/
+        width: 30%;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .btn:hover {
+        background-color: black;
+    }
+
+    .Qpaper {
+        cursor: pointer;
+    }
+
+        .Qpaper:hover {
+            box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
+        }
+
+    @@media (max-width: 700px) {
+        .modal-dialog {
+            /*max-width: 720px;*/
+            width: 100%;
+        }
+    }
+    }
+</style>
+
+<script>
+    function RedeemNow(){
+        var Pids=  $('#PremiumID').val();
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("RedeemNow", "Registration")',
+            data: {PaperID:Pids
+            },
+            success: function (response) {
+                debugger;
+                if (response == "S" ) {
+                    alert('Successfully Purchased');
+                    window.location.href ="/Dashboard";// response.split('^')[1];
+                }
+                else if (response == "P" ) {
+                    alert('Already Purchased,Check on Dashboard');
+                    window.location.href ="/Dashboard";// response.split('^')[1];
+                }
+                else {
+                    alert(response);
+                }
+
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    function GetModal(PaperID,Price) {
+        $('#PremiumID').val(PaperID);
+        $('#RedeemPoint').text(Price);
+        var MainBalance=0;
+
+        if (Price > MainBalance) {
+            $('#CheckId').text('Sorry! You have insufficient points to buy paper.You can get more points from your friend.You can get points to your friends through refer & Earn. (Sorry! पेपर खरीदने के लिए आपके पास अपर्याप्त पॉइंट्स है। आप अपने फ्रेंड से और अधिक  पॉइंट मंगवा सकते है। आप अपने दोस्तों को Refer & Earn के माध्यम  से पॉइंट प्राप्त कर सकते है )');
+            $('#PRedeemPoints').attr("disabled", true);
+        } else {
+            $('#CheckId').text('Congratulations! You can purchase now.');
+            $('#PRedeemPoints').attr("disabled", false);
+        }
+        return false;
+    }
+</script>

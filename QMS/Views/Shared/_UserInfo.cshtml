@@ -1,0 +1,48 @@
+﻿@using GenericwithUnitofwork.Models
+@{
+ //   UserModel userConnected = Session["UserDetails"] as UserModel;
+   // QuizVM quizSelected = Session["SelectedQuiz"] as QuizVM;
+
+}
+
+
+    @if (Session["UserName"] != null)
+    {
+
+
+
+        <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+            <ul class="navbar-nav justify-content-center">
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#"><span> <i class="fas fa-user"></i><b> Welcome:  @Session["UserName"].ToString().ToUpper()</b></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="~/Registration/Logout">Logout</a>
+                </li>
+                 
+
+            </ul>
+
+        </div>
+
+    }
+
+
+@*<div class="row">
+
+    <div class="col-md-4">
+        <img src="@userConnected.ProfilImage" class="img-circle" style="width: 12%;" />
+        <span> <b>Welcome :</b> @Session["UserName"].ToString()</span>
+    </div>
+
+    
+
+    <div class="col-md-4" style="margin-top: 15px;">
+        <span> <b>Date :</b> @DateTime.Now</span>
+    </div>
+
+</div>*@
+   
+
+

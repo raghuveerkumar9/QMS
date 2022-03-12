@@ -1,0 +1,297 @@
+﻿@using Domain
+@model Registration
+@{
+    ViewBag.Title = "Login";
+    //Layout = "~/Views/Shared/_Otherlayout.cshtml";
+    List<SelectListItem> GenderList = new List<SelectListItem>();
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Male",
+        Value = "M"
+    });
+    GenderList.Add(new SelectListItem
+    {
+        Text = "Female",
+        Value = "F"
+    });
+}
+
+<div class="padding">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+        </div>
+        <div class="col-sm-12 col-md-4">
+
+            <div class="login">
+                <div class="col-sm-12 col-md-12">
+
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-12">
+                            <br />
+                            <div class="loginbox radius">
+                                <h2 style="text-align: center; font-size: 36px; font-weight: bold; color: #333;margin-bottom:10px">Login</h2>
+                                <div class="loginboxinner radius" align="center">
+
+                                    <div class="loginform" align="center">
+
+                                        <div class="form-group">
+
+                                            <input class="form-control" id="UserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" id="UserPass" placeholder="Enter Password" maxlength="16" type="password" />
+                                            <span onmouseover="mouseoverPass('UserPass','.LshowPassword');" onmouseout="mouseoutPass('UserPass','.LshowPassword');" class="fa fa-fw fa-eye field-icon fa-eye fa-eye-slash LshowPassword"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" onclick="userlogin()" class="btn btn-success">Sign In </button>
+                                        </div>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#1">Forget password ?</a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="agileits-modal modal fade in login-page" id="1" tabindex="-1" role="dialog" aria-labelledby="product-pop" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h2 style="text-align: center; font-size: 20px; font-weight: bold; color: #333333;">Password recovery</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <h6 style="text-align: center; color: grey;"> Here enter your registered mobile no for recover password</h6>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <input class="form-control" id="FUserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <input class="form-control" id="FDOB" type="text">
+                                            </div>
+
+
+
+                                            <div class="form-group text-center">
+                                                <button id="SendPassword" type="submit" onclick="ForgetPassword()" class="btn btn-success">Show Password</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="loginbox radius">
+                            <h2 style="text-align: center; font-size: 36px; font-weight: bold; color: #333;">Sign Up</h2>
+                            <div class="loginboxinner radius" align="center">
+                                <div class="loginheader">
+                                    <h4 class="title" style="color: #F44336; font-family: 'Offside', cursive; font-size: 1.8em;margin-bottom:10px">Create a new account.</h4>
+                                </div>
+                                <div class="loginform" align="center">
+                                    <div class="form-group">
+                                        <input class="form-control" id="SUserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="SUserPass" placeholder="Enter Password" maxlength="16" type="password">
+                                        <span onmouseover="mouseoverPass('SUserPass','.showPassword');" onmouseout="mouseoutPass('SUserPass','.showPassword');" class="fa fa-fw fa-eye field-icon fa-eye fa-eye-slash showPassword"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="Name" placeholder="Enter Full Name" maxlength="100" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Gender", new SelectList(GenderList, "Value", "Text"), new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="DOB" maxlength="10" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" onclick="UserSinup()" class="btn btn-success">Sign Up </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+        </div>
+    </div>
+</div>
+
+<style>
+    .field-icon {
+        float: right;
+        margin-left: -25px;
+        margin-top: -25px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .container {
+        padding-top: 5px;
+        margin: auto;
+    }
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script>
+
+    function mouseoverPass(id,ClassName) {
+        var obj = document.getElementById(id);
+        $(ClassName).removeClass("fa fa-fw fa-eye field-icon");
+        $(ClassName).removeClass("fa-eye fa-eye-slash");
+        $(ClassName).addClass("fa fa-fw fa-eye field-icon");
+        obj.type = "text";
+    }
+
+    function mouseoutPass(id, ClassName) {
+        var obj = document.getElementById(id);
+        $(ClassName).removeClass("fa fa-fw fa-eye field-icon");
+        $(ClassName).removeClass("fa-eye fa-eye-slash");
+        $(ClassName).addClass("fa fa-fw fa-eye field-icon fa-eye fa-eye-slash");
+        obj.type = "password";
+    }
+    function fValidation(varfield, varAlert) {
+
+        alert(varAlert);
+        var varX = document.getElementById(varfield).offsetTop;
+        var varY = document.getElementById(varfield).offsetLeft;
+        window.scrollTo(varX, varY);
+        document.getElementById(varfield).focus();
+    }
+    $(document).ready(function ($) {
+
+        $('#FDOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+        $('#DOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
+
+    });
+  
+    function UserSinup() {
+        if (stripBlanks(document.getElementById('SUserMobile').value) == "" || document.getElementById('SUserMobile').value.length != 10) {
+            fValidation('SUserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('SUserMobile').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('SUserPass').value) == "") {
+            fValidation('SUserPass', 'Please  Enter password');
+            document.getElementById('SUserPass').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('Name').value) == "") {
+            fValidation('Name', 'Please  Enter Name');
+            document.getElementById('Name').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('DOB').value) == "" || !validateDate(document.getElementById('DOB').value)) {
+            fValidation('DOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('DOB').focus();
+            return false;
+        }
+
+
+
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Sinup", "Registration")',
+            data: {
+                UserMobile: $('#SUserMobile').val(), UserPass: $('#SUserPass').val(), Name: $('#Name').val(), Gender: $('#Gender').val(), DOB: $('#DOB').val(),
+                ReferralCode: $('#referralcode').val()
+            },
+            success: function (response) {
+                debugger;
+                if (response.split('^')[0] == "Success") {
+                    window.location.href = response.split('^')[1];
+                }
+                else {
+                    alert(response);
+                }
+
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    function ForgetPassword() {
+        if (stripBlanks(document.getElementById('FUserMobile').value) == "" || document.getElementById('FUserMobile').value.length != 10) {
+            fValidation('FUserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('FUserMobile').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('FDOB').value) == "" || !validateDate(document.getElementById('FDOB').value)) {
+            fValidation('FDOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+            document.getElementById('FDOB').focus();
+            return false;
+        }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("ForgetPassword", "Registration")',
+            data: { UserMobile: $('#FUserMobile').val(), DOB: $('#FDOB').val() },
+
+            success: function (response) {
+                alert(response);
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+    function userlogin() {
+        if (stripBlanks(document.getElementById('UserMobile').value) == "" || document.getElementById('UserMobile').value.length != 10) {
+            fValidation('UserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('UserMobile').focus();
+            return false;
+        }
+        if (stripBlanks(document.getElementById('UserPass').value) == "") {
+            fValidation('UserPass', 'Please  Enter password');
+            document.getElementById('UserPass').focus();
+            return false;
+        }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("Login", "Registration")',
+            data: { UserMobile: $('#UserMobile').val(), UserPass: $('#UserPass').val() },
+
+            success: function (response) {
+                debugger;
+                if (response.split('^')[0] == "Success") {
+                    window.location.href = response.split('^')[1];
+                }
+                else {
+                    alert(response);
+                }
+
+
+            },
+            error: function (response) {
+
+            }
+        });
+
+    }
+
+    function IsNumeric(key) {
+        var keycode = (key.which) ? key.which : key.keyCode;
+        if (keycode > 31 && (keycode < 48 || keycode > 57)) {
+            //alert(" You can enter only Digit 0 to 9 ");
+            return false;
+        }
+        else return true;
+    }
+
+</script>
+

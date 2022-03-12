@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+<div class="app-header white box-shadow">
+    <div class="navbar dark">
+        <!-- Open side - Naviation on mobile -->
+        <a data-toggle="modal" data-target="#aside" class="navbar-item pull-left hidden-lg-up">
+            <i class="material-icons"></i>
+        </a>
+        <!-- / -->
+        <!-- Page title - Bind to $state's title -->
+        <div class="navbar-item pull-left h5" id="pageTitle">@ViewBag.Title</div>
+
+        <!-- navbar right -->
+        <!--Commented code-->
+        <div id="target-header">
+     </div>
+        @*@Html.Action("GetHeaderView", "UserRegistration")*@
+        <!--Commented code-->
+        <!-- / navbar right -->
+        <!-- navbar collapse -->
+        <!-- / navbar collapse -->
+    </div>
+</div>

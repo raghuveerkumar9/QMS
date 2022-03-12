@@ -1,0 +1,17 @@
+﻿@using ChordiaInfotech_live.Models
+ 
+@{
+    var userConnected = Session["registerUser"] as AdminMaster;
+
+
+}
+@if (userConnected != null)
+{
+ 
+   <span class="inv" style="text-transform: capitalize;">@userConnected.centername</span>
+
+}
+else{ 
+<span class="inv">Try Login</span>
+
+}

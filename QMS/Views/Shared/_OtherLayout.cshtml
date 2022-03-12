@@ -1,0 +1,76 @@
+﻿ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <meta name="description" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <meta name="twitter:description" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <title>Online Education Portal </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-1.11.0.min.js"></script>
+    <link href="~/Css/MainStyle.css" rel="stylesheet" />
+
+
+    <!-- Web-Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+          rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <!-- //Web-Fonts -->
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+             
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <a class="nav-link text-white" href="~/Home">Home</a>
+                     
+                </ul>
+               
+            </div>
+        </div>
+    </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+
+            <div class="copyright-agiles py-3">
+                <div class="container">
+                    <div class="row">
+                        <p class="col-lg-8 copy-right-grids text-white text-lg-left text-center mt-lg-1">
+                            © 2020 All Rights Reserved | SmartQuizs
+                        </p>
+                        <!-- social icons -->
+                        <div class="social-icons text-lg-right text-center col-lg-4 mt-lg-0 mt-3">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="#" target="_blank" class="fab fa-facebook-f icon-border facebook rounded-circle"> </a>
+                                </li>
+                                <li class="mx-2">
+                                    <a href="#" class="fab fa-twitter icon-border twitter rounded-circle"> </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fab fa-google-plus-g icon-border googleplus rounded-circle"> </a>
+                                </li>
+                                <li class="ml-2">
+                                    <a href="#" class="fas fa-rss icon-border rss rounded-circle"> </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- //social icons -->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Js/edulearn.js"></script>
+    <script src="~/Js/move-top.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

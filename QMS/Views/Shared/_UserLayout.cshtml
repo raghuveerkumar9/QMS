@@ -1,0 +1,264 @@
+﻿@using Domain
+@{
+    var UserData = Session["UserDetails"] as Registration;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Online Education Portal </title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <meta name="description" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <meta name="twitter:description" content="Aptitude, Logical Reasoning, Computer Questions,online test," />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+
+    <link href="~/css/mislider.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/mislider-custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" media="all" />
+
+    <link href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+          rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <style>
+        .bg-dark {
+            background-color: #e67817 !important;
+        }
+
+        .bg-light {
+            /*background: linear-gradient(to bottom, #2c2f34, #2c2f34) !important;*/
+            background: linear-gradient(to bottom, #394351, #394351) !important;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            /*background-color: #2c2f34;*/
+            background-color: #394351;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            cursor: pointer;
+        }
+
+            .sidenav a {
+                letter-spacing: 1px;
+                font-size: 15px;
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                color: white;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                    font-style: italic;
+                    font-size: 18px;
+                }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+        @@media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+                .sidenav a {
+                    font-size: 15px;
+                }
+        }
+
+
+        .navbar-light .navbar-nav .nav-link {
+            color: white;
+        }
+    </style>
+
+    @Styles.Render("~/bundles/css")
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+
+        <div class="middle-w3ls-nav py-2">
+            <div class="container">
+                <div class="row">
+
+                    <a class="logo font-italic font-weight-bold col-lg-4 text-lg-left text-center" href="~/Products">
+                        <h1>Smart Quizs</h1>
+                        <h6>A unique think</h6>
+                    </a>
+
+                    <div class="col-lg-8 right-info-agiles mt-lg-0 mt-sm-3 mt-1">
+                        <div class="row">
+                            <div class="col-sm-4 col-6 top-login-butt text-right mt-sm-2">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //middle header -->
+    </header>
+    <!-- //header -->
+    <!-- banner -->
+    <div class="banner">
+
+        <!-- navigation -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css">
+        <script src="~/Js/jquery19.js"></script>
+
+        <div class="navigation-w3ls">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-nav">
+                <div id="mySidenav" class="sidenav float-left">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                    <a class="nav-link text-white" href="~/Dashboard"><i class="fas fa-tv"></i> Dashboard</a>
+                    <a class="nav-link text-white" href="~/Wallet"><i class="fa fa-google-wallet"></i> Wallet</a>
+                    <a class="nav-link text-white" href="~/Profile"><i class="fa fa-user-plus"></i> Profile</a>
+                    <a class="nav-link text-white" href="~/Result-Details"><i class="fas fa-check-square"></i> Result</a>
+                    <a class="nav-link text-white" href="~/Refer-Earn"> <i class="fa fa-inr"></i> Refer &amp; Earn </a>
+                    <a class="nav-link text-white" href="~/Transaction"><i class="fa fa-exchange"></i> Transactions </a>
+                    <a class="nav-link text-white" href="~/Offers"><i class="fa fa-gift"></i> Offers </a>
+                    <a class="nav-link text-white" href="~/Analysis"><i class="fa fa-chart-bar"></i> Analysis </a>
+                    <a class="nav-link text-white" href="~/Products"><i class="fa fa-plus-square"></i> Products </a>
+                    <a class="nav-link text-white" href="~/Reset-Password"><i class="fa fa-key"></i>Reset Password</a>
+                    <a class="nav-link text-white" href="javascript:void(0);" data-toggle="modal" onclick="fEnq()" data-target="#EnquiryModal"><i class="fas fa-edit"></i> Query/Feedback</a>
+                    <a class="nav-link text-white" href="~/Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+
+                <span style="font-size:30px;cursor:pointer;color:white " onclick="openNav()">&#9776; </span>
+                <ul class="nav navbar-nav nav-flex-icons ml-auto" style="color:white">
+                    <li>
+                        <a href="#" style="color:white">
+                            
+                            @if (UserData != null)
+                            {
+                                <a class="nav-link text-white" href="~/Transaction">Points : @UserData.Points </a>
+
+                            }
+                        </a>
+
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav nav-flex-icons ml-auto" style="color:white">
+                    <li>
+
+                        @if (UserData != null)
+                        {
+                            <a class="nav-link text-white" href="~/Profile"><i class="fas fa-user"></i> @UserData.Name.Split(' ')[0].ToString().ToUpper()</a>
+                        }
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <!-- //navigation -->
+    </div>
+    <!-- //banner -->
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <div class="agileits-modal modal fade in login-page" id="EnquiryModal" tabindex="-1" role="dialog" aria-labelledby="product-pop" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 style="text-align: center; font-size: 20px; font-weight: bold; color: #333333;">Query/Feedback</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="enq"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer>
+
+        <div class="copyright-agiles py-3">
+            <div class="container">
+                <div class="row">
+                    <p class="col-lg-8 copy-right-grids text-white text-lg-left text-center mt-lg-1">
+                        © 2020 All Rights Reserved | Mynutbolt
+                    </p>
+                    <!-- social icons -->
+                    <div class="social-icons text-lg-right text-center col-lg-4 mt-lg-0 mt-3">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="# target="_blank" class="fab fa-facebook-f icon-border facebook rounded-circle"> </a>
+                            </li>
+                            <li class="mx-2">
+                                <a href="#" class="fab fa-twitter icon-border twitter rounded-circle"> </a>
+                            </li>
+                            <li>
+                                <a href="#" class="fab fa-google-plus-g icon-border googleplus rounded-circle"> </a>
+                            </li>
+                            <li class="ml-2">
+                                <a href="#" class="fas fa-rss icon-border rss rounded-circle"> </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //social icons -->
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- //footer -->
+
+
+    @Scripts.Render("~/bundles/Client")
+
+    <script>
+        function fEnq() {
+            $.ajax({
+
+                type: 'GET',
+                url: "../Home/_Enquiry",
+                data: null,
+                success: function (response) {
+                    $('.enq').html(response);
+                },
+                error: function (response) {
+                }
+            });
+        }
+    </script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+
+</body>
+
+
+</html>
