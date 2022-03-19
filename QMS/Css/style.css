@@ -2123,7 +2123,7 @@ li.subitem1 p {
 
 @media(max-width: 1680px) {
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-nav {
-        width: 70%;
+        width: 100%;
     }
 }
 

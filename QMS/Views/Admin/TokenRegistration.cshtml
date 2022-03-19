@@ -1,7 +1,6 @@
 ﻿@using Domain
 @model Registration
-@{
-    /**/
+@{ /**/
 
     ViewBag.Title = "Token Registration";
     //Layout = "~/Views/Shared/_Otherlayout.cshtml";
@@ -33,8 +32,7 @@
     {
         Text = "Department Name",
         Value = ""
-    });
-}
+    }); }
 
 <div class="padding">
     <div class="row">
@@ -47,45 +45,50 @@
                     <div class="col-sm-12 col-md-12">
                         <div class="loginbox radius">
                             <div class="loginboxinner radius" align="center">
+                                <div id="tokenReg">
+                                    <div class="loginform" align="center">
+                                        <div class="form-group">
+                                            <input class="form-control" id="Name" placeholder="Enter Name" maxlength="100" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" id="SUserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" id="Age" maxlength="2" placeholder="Enter Age" type="text" onkeypress="return IsNumeric(event);">
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.DropDownList("DeptID", new SelectList(ViewData["DepartmentList"] as List<DepartmentMaster>, "DeptID", "DepartmentName"), "--Department", new { @class = "form-control" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.DropDownList("CounterID", new SelectList(ViewData["CounterList"] as List<CounterMaster>, "ID", "CounterName"), "--Counter NO--", new { @class = "form-control" })
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.DropDownList("Gender", new SelectList(GenderList, "Value", "Text"), new { @class = "form-control" })
+                                        </div>
 
-                                <div class="loginform" align="center">
-                                    <div class="form-group">
-                                        <input class="form-control" id="Name" placeholder="Enter Name" maxlength="100" type="text">
+
+                                        <div class="form-group">
+                                            @Html.DropDownList("Payment", new SelectList(PaymentList, "Value", "Text"), new { @class = "form-control" })
+                                        </div>
+
+                                        @*<div class="form-group">
+                                                <input class="form-control" id="DOB" maxlength="10" placeholder="DD/MM/YYYY" type="text" onblur="return; getAge()">
+                                                <label id="lblAge"></label>
+                                            </div>*@
+
+
+                                        <div class="form-group">
+                                            <button type="submit" onclick="Tokensubmit()" class="btn btn-success">Submit </button>
+                                            <input type="button" value="Refresh" class="btn btn-success" onclick="GetClear()" />
+
+                                        </div>
+
+
                                     </div>
-                                    <div class="form-group">
-                                        <input class="form-control" id="SUserMobile" maxlength="10" placeholder="Enter Mobile Number" type="text" onkeypress="return IsNumeric(event);">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" id="Age" maxlength="10" placeholder="Enter Age" type="text" onkeypress="return IsNumeric(event);">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" id="CounterNumber" placeholder="Counter Number" maxlength="100" type="text">
-                                    </div>
-                                    @Html.DropDownList("dept", new SelectList(ViewData["DepartmentList"] as List< DepartmentMaster> , "ID", "DeparmentName"), new { @class = "form-control" })
-                                    
                                 </div>
-                                    <div class="form-group">
-                                        @Html.DropDownList("Gender", new SelectList(GenderList, "Value", "Text"), new { @class = "form-control" })
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        @Html.DropDownList("Payment", new SelectList(PaymentList, "Value", "Text"), new { @class = "form-control" })
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input class="form-control" id="DOB" maxlength="10" placeholder="DD/MM/YYYY" type="text" onblur="return; getAge()">
-                                        <label id="lblAge"></label>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <button type="submit" onclick="Tokensubmit()" class="btn btn-success">Submit </button>
-                                        <input type="button" value="Refresh" class="btn btn-success" onclick="GetClear()" />
-
-                                    </div>
-
-
+                                <div id="tokenShow">
+                                    <p>Your Token N0.</p>
+                                    <p><span id="tokenNoShow" style="font-size: 75px; font-weight: 700; color: green; font-family: Georgia; "></span></p>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +119,63 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
+      function Tokensubmit() {
+        if (stripBlanks(document.getElementById('SUserMobile').value) == "" || document.getElementById('SUserMobile').value.length != 10) {
+            fValidation('SUserMobile', 'Please  Enter 10 Digit Mobile No.');
+            document.getElementById('SUserMobile').focus();
+            return false;
+        }
+
+        if (stripBlanks(document.getElementById('Name').value) == "") {
+            fValidation('Name', 'Please  Enter Name');
+            document.getElementById('Name').focus();
+            return false;
+        }
+        //if (stripBlanks(document.getElementById('DOB').value) == "" || !validateDate(document.getElementById('DOB').value)) {
+        //    fValidation('DOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
+        //    document.getElementById('DOB').focus();
+        //    return false;
+        //   }
+        $.ajax({
+
+            type: 'POST',
+            url: '@Url.Action("TokenRegistrationSave", "Admin")',
+            data: {
+                Name: $('#Name').val(), Mobile: $('#SUserMobile').val(), Age: $('#Age').val(), CounterNumberID: $('#CounterID').val(), DepartmentID: $('#DeptID').val(),
+                Gender: $('#Gender').val(), TokenNumber:0, Payment: $('#Payment').val()
+
+            },
+            success: function (response) {
+                debugger;
+                alert(" Successfully Updated Your Token No is " + response.split('^')[1]);
+                $('#tokenNoShow').html(response.split('^')[1]);
+                $('#tokenReg').hide();
+                $('#tokenShow').show();
+                GetClear();
+            },
+            error: function (response) {
+
+            }
+        });
+    }
+</script>
+<script>
+    function getNewToken() {
+        $('#tokenReg').show();
+        $('#tokenShow').hide();
+        $('#tokenNoShow').html("");
+        GetClear();
+    }
+    function GetClear() {
+        document.getElementById('SUserMobile').value = "";
+        document.getElementById('Name').value = "";
+      //  document.getElementById('DOB').value = "";
+        document.getElementById('Age').value = "";
+        document.getElementById('CounterID').value = "";
+        document.getElementById('DeptID').value = "";
+    }
+
+
     function getAge(dateString) {
         var today = new Date();
         var dob = document.getElementById(DOB).value;
@@ -157,55 +217,7 @@
         $('#DOB').mask("99/99/9999", { placeholder: "DD/MM/YYYY" });
 
     });
-    function GetClear() {
-        document.getElementById('SUserMobile').value = "";
-        document.getElementById('Name').value = "";
-        document.getElementById('DOB').value = "";
-        document.getElementById('Age').value = "";
-        document.getElementById('CounterNumber').value = "";
-        document.getElementById('dept').value = "";
 
-    }
-       function Tokensubmit() {
-        if (stripBlanks(document.getElementById('SUserMobile').value) == "" || document.getElementById('SUserMobile').value.length != 10) {
-            fValidation('SUserMobile', 'Please  Enter 10 Digit Mobile No.');
-            document.getElementById('SUserMobile').focus();
-            return false;
-        }
-
-        if (stripBlanks(document.getElementById('Name').value) == "") {
-            fValidation('Name', 'Please  Enter Name');
-            document.getElementById('Name').focus();
-            return false;
-        }
-        if (stripBlanks(document.getElementById('DOB').value) == "" || !validateDate(document.getElementById('DOB').value)) {
-            fValidation('DOB', 'Please  Enter Date of Birth in [DD/MM/YYYY] Format');
-            document.getElementById('DOB').focus();
-            return false;
-           }
-
-
-
-
-        $.ajax({
-
-            type: 'POST',
-            url: '@Url.Action("TokenRegistrationSave", "Admin")',
-            data: {
-                Name: $('#Name').val(), Mobile: $('#SUserMobile').val(), Age: $('#Age').val(), CounterNumberID: $('#CounterNumber').val(), DepartmentID: $('#dept').val(),
-                Gender: $('#Gender').val(), TokenNumber: $('#TokenNumber').val(), Payment: $('#Payment').val()
-
-            },
-            success: function (response) {
-                debugger;
-                alert(" Successfully Updated Your Token No is " + response.split('^')[1]);
-                GetClear();
-            },
-            error: function (response) {
-
-            }
-        });
-    }
     function ForgetPassword() {
         if (stripBlanks(document.getElementById('FUserMobile').value) == "" || document.getElementById('FUserMobile').value.length != 10) {
             fValidation('FUserMobile', 'Please  Enter 10 Digit Mobile No.');

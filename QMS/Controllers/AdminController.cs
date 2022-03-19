@@ -12,11 +12,13 @@ namespace QMS.Controllers
     {
         private IRepository<TokenRegistration> _TokenRegistration = null;
         private IRepository<DepartmentMaster> _DepartmentMaster = null;
+        private IRepository<CounterMaster> _CounterMaster = null;
         static JavaScriptSerializer _ser = new JavaScriptSerializer();
         public AdminController()
         {
             this._TokenRegistration = new Repository<TokenRegistration>();
             this._DepartmentMaster = new Repository<DepartmentMaster>();
+            this._CounterMaster = new Repository<CounterMaster>();
 
         }
         // GET: Admin
@@ -25,6 +27,9 @@ namespace QMS.Controllers
             if (GetUser() != null && _userIdentity.RoleID == 0)
             {
                 UpdateLogger(_userIdentity.UserId, "Logged by mobileno- " + _userIdentity.UserMobile.ToString());
+                ViewData["DepartmentList"] = _DepartmentMaster.SelectAll().Select(x => new DepartmentMaster { DeptID = x.DeptID, DepartmentName = x.DepartmentName }).ToList();
+                ViewData["CounterList"] = _CounterMaster.SelectAll().Select(x => new CounterMaster { ID = x.ID, CounterName = x.CounterName }).ToList();
+
                 return View();
             }
             else
@@ -35,8 +40,8 @@ namespace QMS.Controllers
         #region  Token Registration
         public ActionResult TokenRegistration()
         {
-            //ViewData["DepartmentList"] =_DepartmentMaster.SelectAll().Select(x => new { ID = x.DeptID, DeparmentName = x.DepartmentName }).ToList();
-            ViewData["DepartmentList"]=_DepartmentMaster.SelectAll().Select(x => new { ID = x.DeptID, DeparmentName = x.DepartmentName }).ToList();
+            ViewData["DepartmentList"] = _DepartmentMaster.SelectAll().Select(x => new DepartmentMaster { DeptID = x.DeptID, DepartmentName = x.DepartmentName }).ToList();
+            ViewData["CounterList"] = _CounterMaster.SelectAll().Select(x => new CounterMaster { ID = x.ID, CounterName = x.CounterName }).ToList();
             return View();
 
         }

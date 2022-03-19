@@ -17,8 +17,9 @@ namespace Domain
         }
         public DbSet<Registration> Registrations { get; set; }
         public DbSet<TokenRegistration> TokenRegistrations { get; set; }
-        public DbSet<DepartmentMaster> DepartmentMaster { get; set; }
-
+        public DbSet<DepartmentMaster> DepartmentMasters { get; set; }
+        public DbSet<CounterMaster> CounterMasters { get; set; }
+        
         public static AppCtx Create()
         {
             return new AppCtx();

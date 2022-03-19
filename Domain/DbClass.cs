@@ -45,8 +45,14 @@ namespace Domain
         public int DeptID { get; set; }
         public string DepartmentName { get; set; }
         public DateTime Date { get; set; }
-
-
+    }
+    [Table("CounterMaster")]
+    public class CounterMaster
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public int ID { get; set; }
+        public string CounterName { get; set; }
     }
     [Table("TokenRegistration")] 
     public class TokenRegistration
